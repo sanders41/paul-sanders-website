@@ -68,8 +68,6 @@ typings/
 # nuxt.js build output
 .nuxt
 
-# Nuxt generate
-dist
 
 # vuepress build output
 .vuepress/dist
@@ -89,5 +87,9 @@ sw.*
 # Vim swap files
 *.swp
 
-# Zola build files
-public/
+# Astro
+.astro/
+dist/
+
+test-results/
+playwright-report/

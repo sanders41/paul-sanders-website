@@ -1,0 +1,14 @@
+services:
+  paul-sanders-music:
+    restart: "no"
+    ports:
+      - "4321:80"
+    build:
+      args:
+        - PUBLIC_UMAMI_URL=
+        - PUBLIC_UMAMI_WEBSITE_ID=
+
+networks:
+  traefik-public:
+    # For local dev, don't expect an external Traefik network
+    external: false

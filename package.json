@@ -1,0 +1,23 @@
+{
+  "name": "paul-sanders-website",
+  "type": "module",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@playwright/test": "1.57.0",
+    "@tailwindcss/vite": "4.1.18",
+    "@typescript-eslint/eslint-plugin": "8.53.0",
+    "@typescript-eslint/parser": "8.53.0",
+    "astro": "5.16.11",
+    "dotenv": "17.2.3",
+    "eslint": "9.39.2",
+    "eslint-plugin-astro": "1.5.0",
+    "tailwindcss": "4.1.18"
+  }
+}

@@ -1,0 +1,63 @@
+services:
+  paul-sanders-music:
+    image: paul-sanders-music:latest
+    restart: unless-stopped
+    networks:
+      - traefik-public
+      - default
+    build:
+      context: .
+      args:
+        - PUBLIC_UMAMI_URL=${ANALYTICS_URL:-}
+        - PUBLIC_UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
+    container_name: paul-sanders-music
+    deploy:
+      resources:
+        limits:
+          memory: 64M
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://127.0.0.1:80"]
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 10s
+    labels:
+      - traefik.enable=true
+      - traefik.docker.network=traefik-public
+      - traefik.constraint-label=traefik-public
+
+      - traefik.http.services.${STACK_NAME?Variable not set}-frontend.loadbalancer.server.port=80
+
+      # WWW to non-WWW redirect middleware
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-www-redirect.redirectregex.regex=^https://www\.(.*)
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-www-redirect.redirectregex.replacement=https://$${1}
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-www-redirect.redirectregex.permanent=true
+
+      # Rate limiting middleware
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-rate-limit.ratelimit.burst=100
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-rate-limit.ratelimit.average=50
+
+      # Frontend security headers middleware
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.framedeny=true
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.contenttypenosniff=true
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.referrerpolicy=strict-origin-when-cross-origin
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.forcestsheader=true
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.stsincludesubdomains=true
+      - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.stsseconds=31536000
+      - "traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline' ${ANALYTICS_URL:-}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' ${ANALYTICS_URL:-}; font-src 'self'; frame-src 'self' https://www.youtube.com https://www.facebook.com; object-src 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests"
+
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=Host(`${DOMAIN?Variable not set}`) || Host(`www.${DOMAIN?Variable not set}`)
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.entrypoints=http
+
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.rule=Host(`${DOMAIN?Variable not set}`) || Host(`www.${DOMAIN?Variable not set}`)
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.entrypoints=https
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.tls=true
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.tls.certresolver=le
+
+      # Enable redirection for HTTP and HTTPS
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.middlewares=https-redirect
+      - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-https.middlewares=${STACK_NAME?Variable not set}-www-redirect,${STACK_NAME?Variable not set}-frontend-rate-limit,${STACK_NAME?Variable not set}-frontend-security-headers
+
+networks:
+  traefik-public:
+    external: true

@@ -1,0 +1,57 @@
+name: Testing
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+jobs:
+  linting:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Build
+        run: npm run build
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - name: Setup node
+        uses: actions/setup-node@v6
+        with:
+          node-version: "22"
+          cache: "npm"
+      - name: Install Dependencies
+        run: npm ci
+      - name: Cache Playwright Browsers
+        uses: actions/cache@v5
+        with:
+          path: ~/.cache/ms-playwright
+          key: ${{ runner.os }}-playwright-${{ hashFiles('**/frontend/package-lock.json') }}
+          restore-keys: ${{ runner.os }}-playwright-
+      - name: Setup playwright
+        run: npx playwright install
+      - name: Build
+        run: npm run build
+      - name: Tests
+        run: npx playwright test
