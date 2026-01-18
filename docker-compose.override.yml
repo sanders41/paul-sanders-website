@@ -1,5 +1,5 @@
 services:
-  paul-sanders-music:
+  paul-sanders-website:
     restart: "no"
     ports:
       - "4321:80"
