@@ -1,6 +1,6 @@
 services:
-  paul-sanders-music:
-    image: paul-sanders-music:latest
+  paul-sanders-website:
+    image: paul-sanders-website:latest
     restart: unless-stopped
     networks:
       - traefik-public
@@ -10,7 +10,7 @@ services:
       args:
         - PUBLIC_UMAMI_URL=${ANALYTICS_URL:-}
         - PUBLIC_UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
-    container_name: paul-sanders-music
+    container_name: paul-sanders-website
     deploy:
       resources:
         limits:
