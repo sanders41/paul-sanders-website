@@ -1,8 +1,18 @@
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.0.1
+    rev: v6.0.0
     hooks:
-    - id: check-toml
-    - id: check-yaml
-    - id: end-of-file-fixer
-    - id: trailing-whitespace
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: no-commit-to-branch
+      - id: trailing-whitespace
+  - repo: local
+    hooks:
+      - id: frontend-lint
+        name: Run linting
+        entry: npm
+        args: [run, lint]
+        language: system
+        pass_filenames: false
