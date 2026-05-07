@@ -1,0 +1,30 @@
+name: Deploy
+
+on:
+  pull_request:
+    types: [closed]
+    branches:
+      - main
+
+jobs:
+  deploy:
+    if: github.event.pull_request.merged == true && !contains(github.event.pull_request.labels.*.name, 'skip-deploy')
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Tailscale
+        uses: tailscale/github-action@v4
+        with:
+          oauth-client-id: ${{ secrets.TS_OAUTH_CLIENT_ID }}
+          oauth-secret: ${{ secrets.TS_OAUTH_SECRET }}
+          tags: tag:ci
+
+      - name: Deploy
+        run: |
+          ssh -o "StrictHostKeyChecking=no" \
+            ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "
+            cd ${{ secrets.DEPLOY_PATH }}
+            git pull origin main
+            docker compose build
+            docker compose up -d
+          "
