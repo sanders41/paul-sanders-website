@@ -21,7 +21,7 @@ jobs:
 
       - name: Deploy
         run: |
-          ssh -o "StrictHostKeyChecking=no" \
+          ssh -o "StrictHostKeyChecking=no" -o "UserKnownHostsFile=/dev/null" \
             ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "
             cd ${{ secrets.DEPLOY_PATH }}
             git pull origin main
