@@ -10,15 +10,15 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@playwright/test": "1.62.0",
+    "@playwright/test": "1.62.1",
     "@tailwindcss/vite": "4.3.3",
     "@typescript-eslint/eslint-plugin": "8.65.0",
     "@typescript-eslint/parser": "8.65.0",
-    "astro": "7.1.4",
+    "astro": "7.1.6",
     "dotenv": "17.4.2",
     "eslint": "10.8.0",
     "eslint-plugin-astro": "3.0.1",
     "tailwindcss": "4.3.3",
-    "vite": "8.1.5"
+    "vite": "8.2.0"
   }
 }
