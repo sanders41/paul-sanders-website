@@ -44,7 +44,7 @@ services:
       - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.forcestsheader=true
       - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.stsincludesubdomains=true
       - traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.stsseconds=31536000
-      - "traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline' ${ANALYTICS_URL:-}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; connect-src 'self' ${ANALYTICS_URL:-}; font-src 'self'; frame-src 'self' https://www.youtube.com https://www.facebook.com; object-src 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests"
+      - "traefik.http.middlewares.${STACK_NAME?Variable not set}-frontend-security-headers.headers.contentSecurityPolicy=default-src 'self'; script-src 'self' 'unsafe-inline' ${ANALYTICS_URL:-}; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob: https://img.shields.io https://img.buymeacoffee.com; connect-src 'self' ${ANALYTICS_URL:-}; font-src 'self'; frame-src 'self' https://www.youtube.com https://www.facebook.com; object-src 'none'; form-action 'self'; base-uri 'self'; upgrade-insecure-requests"
 
       - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.rule=Host(`${DOMAIN?Variable not set}`) || Host(`www.${DOMAIN?Variable not set}`)
       - traefik.http.routers.${STACK_NAME?Variable not set}-frontend-http.entrypoints=http
