@@ -11,6 +11,15 @@ services:
         - PUBLIC_UMAMI_URL=${ANALYTICS_URL:-}
         - PUBLIC_UMAMI_WEBSITE_ID=${UMAMI_WEBSITE_ID:-}
     container_name: paul-sanders-website
+    logging:
+      driver: loki
+      options:
+        loki-url: "http://127.0.0.1:3100/loki/api/v1/push"
+        loki-retries: "2"
+        loki-max-backoff: "800ms"
+        loki-timeout: "1s"
+        loki-batch-size: "400"
+        loki-external-labels: "container_name={{.Name}},service=paul-sanders-website,environment=production"
     deploy:
       resources:
         limits:
