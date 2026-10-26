@@ -12,13 +12,13 @@
   "devDependencies": {
     "@playwright/test": "1.64.1",
     "@tailwindcss/vite": "4.3.3",
-    "@typescript-eslint/eslint-plugin": "8.71.2",
-    "@typescript-eslint/parser": "8.71.2",
-    "astro": "7.4.0",
-    "dotenv": "18.0.8",
+    "@typescript-eslint/eslint-plugin": "8.72.0",
+    "@typescript-eslint/parser": "8.72.0",
+    "astro": "7.4.2",
+    "dotenv": "18.0.9",
     "eslint": "10.13.0",
     "eslint-plugin-astro": "3.2.1",
     "tailwindcss": "4.3.3",
-    "vite": "8.3.4"
+    "vite": "8.3.5"
   }
 }
