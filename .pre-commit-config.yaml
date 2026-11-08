@@ -4,6 +4,7 @@ repos:
     hooks:
       - id: check-toml
       - id: check-yaml
+        args: [--allow-multiple-documents]
       - id: debug-statements
       - id: end-of-file-fixer
       - id: no-commit-to-branch
@@ -12,7 +13,7 @@ repos:
     hooks:
       - id: frontend-lint
         name: Run linting
-        entry: npm
+        entry: pnpm
         args: [run, lint]
         language: system
         pass_filenames: false

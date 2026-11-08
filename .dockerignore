@@ -18,3 +18,4 @@ blob-report/
 eslint.config.mjs
 playwright.config.ts
 .env
+pnpm-debug.log*
