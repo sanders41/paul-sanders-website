@@ -7,12 +7,10 @@ ARG PUBLIC_UMAMI_WEBSITE_ID
 ENV PUBLIC_UMAMI_URL=$PUBLIC_UMAMI_URL
 ENV PUBLIC_UMAMI_WEBSITE_ID=$PUBLIC_UMAMI_WEBSITE_ID
 
-ENV PNPM_HOME=/pnpm
-ENV PATH=$PNPM_HOME/bin:$PATH
 ENV npm_config_store_dir=/pnpm/store
 
-# Install pnpm
-RUN wget -qO- https://get.pnpm.io/install.sh | env ENV="$HOME/.shrc" SHELL="$(which sh)" sh -
+# Installs the pnpm version pinned in package.json's packageManager
+RUN corepack enable
 
 COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
