@@ -10,17 +10,17 @@
     "lint": "eslint ."
   },
   "devDependencies": {
-    "@playwright/test": "1.64.1",
-    "@tailwindcss/vite": "4.3.3",
+    "@playwright/test": "1.65.0",
+    "@tailwindcss/vite": "4.3.5",
     "@typescript-eslint/eslint-plugin": "8.72.1",
     "@typescript-eslint/parser": "8.72.1",
-    "astro": "7.4.4",
+    "astro": "7.4.7",
     "astro-eslint-parser": "3.2.0",
     "dotenv": "18.0.9",
     "eslint": "10.14.0",
     "eslint-plugin-astro": "3.2.1",
-    "tailwindcss": "4.3.3",
-    "vite": "8.3.5"
+    "tailwindcss": "4.3.5",
+    "vite": "8.3.6"
   },
   "engines": {
     "node": ">=24"
